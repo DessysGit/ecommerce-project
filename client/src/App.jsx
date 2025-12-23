@@ -1,5 +1,6 @@
-// Main App component - the root of my React application
+// Main App component - the root of our React application
 import React from 'react';
+import ProductList from './components/ProductList';
 import './App.css';
 
 function App() {
@@ -9,9 +10,11 @@ function App() {
         <h1>My Ecommerce Store</h1>
         <p>Welcome to our online shop!</p>
       </header>
+      
+      {/* ProductList component fetches and displays products */}
+      <ProductList />
     </div>
   );
 }
 
-// Export so other files can import and use the App component
 export default App;
