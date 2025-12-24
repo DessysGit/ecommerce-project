@@ -37,6 +37,13 @@ setProductsPool(pool); // Give products.js access to database
 // Use routes - all product routes will start with /api/products
 app.use('/api/products', productsRouter);
 
+// Import auth routes and pass database pool to them
+const { router: authRouter, setPool: setAuthPool } = require('./auth');
+setAuthPool(pool); // Give auth.js access to database
+
+// Use routes - all auth routes will start with /api/auth
+app.use('/api/auth', authRouter);
+
 // Root route - test endpoint to check if server is running
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Ecommerce API!'});
