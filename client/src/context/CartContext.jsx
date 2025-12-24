@@ -1,5 +1,5 @@
 // CartContext - Manages shopping cart state across the entire app
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 
 // Create context - this will hold cart data and functions
 const CartContext = createContext();
@@ -19,6 +19,7 @@ export const CartProvider = ({ children }) => {
   // State to store cart items
   // Each item: { product: {...}, quantity: number }
   const [cartItems, setCartItems] = useState([]);
+  const isFirstRender = useRef(true);
 
   // Load cart from localStorage when app starts
   // This persists cart even if user refreshes page
@@ -31,6 +32,12 @@ export const CartProvider = ({ children }) => {
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
+    // If first render, skip saving to avoid overwriting loaded cart
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; // Skip saving on first render
+    }
+    // If not the first render, save to localStorage
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
