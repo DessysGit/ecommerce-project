@@ -1,6 +1,7 @@
 // ProductList component - displays all products from the database
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCart } from '../context/CartContext';
 import './ProductList.css';
 
 function ProductList() {
@@ -13,6 +14,9 @@ function ProductList() {
   
   // State to store any errors
   const [error, setError] = useState(null);
+
+  // Get addToCart function from CartContext
+  const { addToCart } = useCart();
 
   // useEffect runs when component first loads (like componentDidMount)
   // The empty array [] means "run once when component mounts"
@@ -37,6 +41,13 @@ function ProductList() {
       setError(err.message);
       setLoading(false);
     }
+  };
+
+  // Handle add to cart button click
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    
+    alert(`${product.name} added to cart!`);
   };
 
   // Show loading message while fetching data
@@ -65,7 +76,8 @@ function ProductList() {
               <p className="price">₵{product.price}</p>
               <p className="stock">Stock: {product.stock_quantity}</p>
             </div>
-            <button className="add-to-cart">Add to Cart</button>
+            {/* Add to Cart button */}
+            <button className="add-to-cart" onClick={() => handleAddToCart(product)}>Add to Cart</button>
           </div>
         ))}
       </div>
