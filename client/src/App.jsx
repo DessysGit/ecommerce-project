@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ProductList from './components/ProductList';
 import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { useAuth } from './context/AuthContext';
@@ -15,9 +16,18 @@ function App() {
   // State to track which auth form to show (login or signup)
   const [authView, setAuthView] = useState('login');
   
+  // State to store completed order for confirmation
+  const [completedOrder, setCompletedOrder] = useState(null);
+  
   // Get authentication state and functions
   const { user, logout, isAuthenticated } = useAuth();
   const { getCartCount } = useCart();
+
+  // Handle successful order completion
+  const handleOrderSuccess = (order) => {
+    setCompletedOrder(order);
+    setCurrentPage('confirmation');
+  };
 
   // If user is not logged in, show login/signup forms
   if (!isAuthenticated()) {
@@ -36,6 +46,54 @@ function App() {
       </div>
     );
   }
+
+  // Render different pages based on currentPage state
+  const renderPage = () => {
+    switch(currentPage) {
+      case 'products':
+        return <ProductList />;
+      
+      case 'cart':
+        return (
+          <Cart 
+            onBackClick={() => setCurrentPage('products')}
+            onCheckout={() => setCurrentPage('checkout')}
+          />
+        );
+      
+      case 'checkout':
+        return (
+          <Checkout 
+            onBackToCart={() => setCurrentPage('cart')}
+            onOrderSuccess={handleOrderSuccess}
+          />
+        );
+      
+      case 'confirmation':
+        return (
+          <div className="confirmation-page">
+            <div className="confirmation-card">
+              <div className="success-icon">✓</div>
+              <h2>Order Placed Successfully!</h2>
+              <p className="order-number">Order #{completedOrder?.id}</p>
+              <p className="order-total">Total: ${completedOrder?.total_amount}</p>
+              <p className="confirmation-message">
+                Thank you for your order! We'll send you an email confirmation shortly.
+              </p>
+              <button 
+                className="continue-shopping-btn"
+                onClick={() => setCurrentPage('products')}
+              >
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        );
+      
+      default:
+        return <ProductList />;
+    }
+  };
 
   // If user IS logged in, show main app
   return (
@@ -69,12 +127,8 @@ function App() {
         <p>Welcome to our online shop!</p>
       </header>
       
-      {/* Show different components based on current page */}
-      {currentPage === 'products' ? (
-        <ProductList />
-      ) : (
-        <Cart onBackClick={() => setCurrentPage('products')} />
-      )}
+      {/* Render the current page */}
+      {renderPage()}
     </div>
   );
 }
