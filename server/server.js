@@ -44,6 +44,13 @@ setAuthPool(pool); // Give auth.js access to database
 // Use routes - all auth routes will start with /api/auth
 app.use('/api/auth', authRouter);
 
+// Import cart routes and pass database pool to them
+const { router: cartRouter, setPool: setCartPool } = require('./cart');
+setCartPool(pool); // Give cart.js access to database
+
+// Use routes - all cart routes will start with /api/cart
+app.use('/api/cart', cartRouter);
+
 // Root route - test endpoint to check if server is running
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Ecommerce API!'});
