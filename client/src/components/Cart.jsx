@@ -3,15 +3,15 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 import './Cart.css';
 
-// Add onBackClick prop to handle navigation
-function Cart({ onBackClick }) {
+// Add onBackClick and onCheckout props to handle navigation
+function Cart({ onBackClick, onCheckout }) {
   const { 
     cartItems, 
     removeFromCart, 
     updateQuantity, 
     clearCart, 
     getCartTotal 
-  } = useCart()
+  } = useCart();
 
   // Handle quantity change from input
   const handleQuantityChange = (productId, newQuantity) => {
@@ -22,7 +22,7 @@ function Cart({ onBackClick }) {
   };
 
   // If cart is empty, show message
-   if (cartItems.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className="cart-page">
         {/* Back button for empty cart */}
@@ -122,7 +122,8 @@ function Cart({ onBackClick }) {
             <span>${getCartTotal()}</span>
           </div>
           
-          <button className="checkout-btn">
+          {/* Checkout button - calls onCheckout prop */}
+          <button className="checkout-btn" onClick={onCheckout}>
             Proceed to Checkout
           </button>
           

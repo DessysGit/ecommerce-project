@@ -1,5 +1,5 @@
 // Import required packages
-const express = require('express'); // Web frmework for creating server
+const express = require('express'); // Web framework for creating server
 const cors = require('cors'); // Allows frontend to communicate with backend
 const { Pool } = require('pg'); // PostgreSQL client for Node.js
 require('dotenv').config(); // Load environment variables from .env file
@@ -26,7 +26,7 @@ pool.connect((err, client, release) => {
     if (err) {
         return console.error('Error connecting to database;', err.stack);
     }
-    console.log('Connected to PostgreSQL database');
+    console.log('✅ Connected to PostgreSQL database');
     release(); // Release the client back to the pool
 });
 
@@ -51,6 +51,13 @@ setCartPool(pool); // Give cart.js access to database
 // Use routes - all cart routes will start with /api/cart
 app.use('/api/cart', cartRouter);
 
+// Import orders routes and pass database pool to them
+const { router: ordersRouter, setPool: setOrdersPool } = require('./orders');
+setOrdersPool(pool); // Give orders.js access to database
+
+// Use routes - all order routes will start with /api/orders
+app.use('/api/orders', ordersRouter);
+
 // Root route - test endpoint to check if server is running
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Ecommerce API!'});
@@ -58,5 +65,5 @@ app.get('/', (req, res) => {
 
 // Start the server and listen for requests
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });
