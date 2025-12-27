@@ -88,19 +88,57 @@ function ProductList() {
   // Check if any filters are active
   const hasActiveFilters = searchQuery || selectedCategory !== 'all' || selectedSort !== 'newest';
 
-  if (loading) {
-    return <div className="loading">Loading products...</div>;
-  }
+  // Render products content based on state
+  const renderProductsContent = () => {
+    if (loading) {
+      return <div className="loading">Loading products...</div>;
+    }
 
-  if (error) {
-    return <div className="error">Error: {error}</div>;
-  }
+    if (error) {
+      return <div className="error">Error: {error}</div>;
+    }
 
+    if (products.length === 0) {
+      return (
+        <div className="no-products">
+          <p>No products found matching your criteria.</p>
+          <button className="clear-filters-btn" onClick={clearFilters}>
+            Clear Filters
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="products-grid">
+        {products.map((product) => (
+          <div key={product.id} className="product-card">
+            <img src={product.image_url} alt={product.name} />
+            <h3>{product.name}</h3>
+            <p className="description">{product.description}</p>
+            <p className="category">{product.category}</p>
+            <div className="product-footer">
+              <p className="price">${product.price}</p>
+              <p className="stock">Stock: {product.stock_quantity}</p>
+            </div>
+            <button 
+              className="add-to-cart"
+              onClick={() => handleAddToCart(product)}
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Main render - always shows the layout with filters
   return (
     <div className="product-list">
       <h2>Our Products</h2>
       
-      {/* Search and Filter Bar */}
+      {/* Search and Filter Bar - Always visible */}
       <div className="filter-bar">
         {/* Search Input */}
         <div className="search-container">
@@ -149,42 +187,16 @@ function ProductList() {
         )}
       </div>
       
-      {/* Results count */}
-      <div className="results-info">
-        {products.length} {products.length === 1 ? 'product' : 'products'} found
-        {debouncedSearch && ` for "${debouncedSearch}"`}
-      </div>
-      
-      {/* Products Grid */}
-      {products.length === 0 ? (
-        <div className="no-products">
-          <p>No products found matching your criteria.</p>
-          <button className="clear-filters-btn" onClick={clearFilters}>
-            Clear Filters
-          </button>
-        </div>
-      ) : (
-        <div className="products-grid">
-          {products.map((product) => (
-            <div key={product.id} className="product-card">
-              <img src={product.image_url} alt={product.name} />
-              <h3>{product.name}</h3>
-              <p className="description">{product.description}</p>
-              <p className="category">{product.category}</p>
-              <div className="product-footer">
-                <p className="price">${product.price}</p>
-                <p className="stock">Stock: {product.stock_quantity}</p>
-              </div>
-              <button 
-                className="add-to-cart"
-                onClick={() => handleAddToCart(product)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
+      {/* Results count - Only show when not loading */}
+      {!loading && (
+        <div className="results-info">
+          {products.length} {products.length === 1 ? 'product' : 'products'} found
+          {debouncedSearch && ` for "${debouncedSearch}"`}
         </div>
       )}
+      
+      {/* Products Content - Loading/Error/Empty/Grid */}
+      {renderProductsContent()}
     </div>
   );
 }
