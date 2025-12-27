@@ -1,11 +1,13 @@
 // Checkout component - Handles order creation and shipping info
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import './Checkout.css';
 
-function Checkout({ onBackToCart, onOrderSuccess }) {
+function Checkout({ onOrderSuccess }) {
+  const navigate = useNavigate();
   // Get cart data and user info
   const { cartItems, getCartTotal, clearCart } = useCart();
   const { token, user } = useAuth();
@@ -56,9 +58,10 @@ function Checkout({ onBackToCart, onOrderSuccess }) {
         }
       );
 
-      // Success! Clear cart and show confirmation
+      // Success! Clear cart and navigate to confirmation
       await clearCart();
       onOrderSuccess(response.data.order);
+      navigate('/order-confirmation');
       
     } catch (err) {
       setError(err.response?.data?.error || 'Order failed. Please try again.');
@@ -68,7 +71,7 @@ function Checkout({ onBackToCart, onOrderSuccess }) {
 
   return (
     <div className="checkout-page">
-      <button className="back-button" onClick={onBackToCart}>
+      <button className="back-button" onClick={() => navigate('/cart')}>
         ← Back to Cart
       </button>
 
