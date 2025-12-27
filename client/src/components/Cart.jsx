@@ -1,10 +1,11 @@
 // Cart component - displays all items in shopping cart
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './Cart.css';
 
-// Add onBackClick and onCheckout props to handle navigation
-function Cart({ onBackClick, onCheckout }) {
+function Cart() {
+  const navigate = useNavigate();
   const { 
     cartItems, 
     removeFromCart, 
@@ -26,7 +27,7 @@ function Cart({ onBackClick, onCheckout }) {
     return (
       <div className="cart-page">
         {/* Back button for empty cart */}
-        <button className="back-button" onClick={onBackClick}>
+        <button className="back-button" onClick={() => navigate('/')}>
           ← Back to Products
         </button>
         <div className="cart-empty">
@@ -41,7 +42,7 @@ function Cart({ onBackClick, onCheckout }) {
   return (
     <div className="cart-page">
       {/* Back button at the top */}
-      <button className="back-button" onClick={onBackClick}>
+      <button className="back-button" onClick={() => navigate('/')}>
         ← Back to Products
       </button>
       
@@ -122,8 +123,8 @@ function Cart({ onBackClick, onCheckout }) {
             <span>${getCartTotal()}</span>
           </div>
           
-          {/* Checkout button - calls onCheckout prop */}
-          <button className="checkout-btn" onClick={onCheckout}>
+          {/* Checkout button - navigates to checkout */}
+          <button className="checkout-btn" onClick={() => navigate('/checkout')}>
             Proceed to Checkout
           </button>
           

@@ -1,5 +1,6 @@
 // ProductList component - displays all products from the database with search and filters
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import './ProductList.css';
@@ -19,6 +20,7 @@ function ProductList() {
   
   // Get addToCart function from cart context
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   // Fetch categories when component mounts
   useEffect(() => {
@@ -111,9 +113,14 @@ function ProductList() {
 
     return (
       <div className="products-grid">
-        {products.map((product) => (
-          <div key={product.id} className="product-card">
-            <img src={product.image_url} alt={product.name} />
+      {products.map((product) => (
+      <div key={product.id} className="product-card">
+      <img 
+                src={product.image_url} 
+                alt={product.name}
+                onClick={() => navigate(`/products/${product.id}`)}
+                style={{cursor: 'pointer'}}
+              />
             <h3>{product.name}</h3>
             <p className="description">{product.description}</p>
             <p className="category">{product.category}</p>
