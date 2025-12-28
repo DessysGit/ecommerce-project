@@ -80,6 +80,24 @@
   border: 2px solid #282c34;
 }
 
+/* Orders button */
+.orders-btn {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.orders-btn:hover {
+  background-color: white;
+  color: #282c34;
+}
+
 /* Logout button */
 .logout-btn {
   background-color: #e74c3c;
