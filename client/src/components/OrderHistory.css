@@ -1,0 +1,277 @@
+/* Order History Page */
+.order-history-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: calc(100vh - 200px);
+}
+
+.order-history-page h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #282c34;
+}
+
+/* Orders List */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Order Card */
+.order-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Order Header - Clickable */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.order-header:hover {
+  background-color: #f8f9fa;
+}
+
+.order-header-left h3 {
+  font-size: 1.3rem;
+  color: #282c34;
+  margin: 0 0 8px 0;
+}
+
+.order-date {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.order-header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Status Badge */
+.order-status-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.order-total {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.expand-icon {
+  font-size: 1.2rem;
+  color: #3498db;
+  transition: transform 0.3s;
+}
+
+/* Order Details - Expandable */
+.order-details {
+  padding: 25px;
+  background-color: #f8f9fa;
+  border-top: 2px solid #e0e0e0;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+  }
+}
+
+.order-details h4 {
+  font-size: 1.1rem;
+  color: #282c34;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
+.order-details h4:first-child {
+  margin-top: 0;
+}
+
+/* Shipping Address */
+.order-shipping p {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Order Items */
+.order-items {
+  margin-top: 25px;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 15px;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.order-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.order-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #282c34;
+  margin: 0;
+}
+
+.item-quantity {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.item-price {
+  font-weight: 600;
+  color: #27ae60;
+  font-size: 1.1rem;
+}
+
+/* Order Summary */
+.order-summary {
+  margin-top: 25px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 1rem;
+}
+
+.summary-row.total {
+  border-top: 2px solid #282c34;
+  margin-top: 10px;
+  padding-top: 15px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+/* No Orders State */
+.no-orders {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-orders h3 {
+  font-size: 1.8rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.no-orders p {
+  color: #999;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.shop-now-btn {
+  padding: 14px 40px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.shop-now-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Loading and Error */
+.loading {
+  text-align: center;
+  padding: 100px 20px;
+  font-size: 1.3rem;
+  color: #3498db;
+}
+
+.error {
+  text-align: center;
+  padding: 100px 20px;
+  color: #e74c3c;
+  background: #fadbd8;
+  border-radius: 8px;
+  margin: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .order-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .order-item {
+    grid-template-columns: 60px 1fr;
+    gap: 10px;
+  }
+
+  .order-item img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .item-price {
+    grid-column: 2;
+    text-align: right;
+  }
+}

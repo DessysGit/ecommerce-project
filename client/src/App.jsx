@@ -5,6 +5,7 @@ import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import OrderHistory from './components/OrderHistory';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { useAuth } from './context/AuthContext';
@@ -28,6 +29,11 @@ function Header() {
           <span className="user-greeting">
             Hello, {user?.first_name || 'User'}!
           </span>
+          
+          {/* Orders link */}
+          <button className="orders-btn" onClick={() => navigate('/orders')}>
+            Orders
+          </button>
           
           <div className="cart-icon" onClick={() => navigate('/cart')}>
             <span className="cart-emoji">🛒</span>
@@ -94,6 +100,7 @@ function AppRoutes() {
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout onOrderSuccess={handleOrderSuccess} />} />
+        <Route path="/orders" element={<OrderHistory />} />
         <Route path="/order-confirmation" element={<OrderConfirmation order={completedOrder} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
