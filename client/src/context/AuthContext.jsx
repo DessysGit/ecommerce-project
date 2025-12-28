@@ -96,14 +96,15 @@ export const AuthProvider = ({ children }) => {
     };
 
     const value = {
-        user,
-        token,
-        loading,
-        signup,
-        login,
-        logout,
-        isAuthenticated
-    };
+    user,
+    token,
+    loading,
+    signup,
+    login,
+    logout,
+    isAuthenticated,
+      setUser  // Add setUser so components can update user info
+  };
 
     return (
         <AuthContext.Provider value={value}>

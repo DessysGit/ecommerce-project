@@ -6,6 +6,7 @@ import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import OrderHistory from './components/OrderHistory';
+import UserProfile from './components/UserProfile';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { useAuth } from './context/AuthContext';
@@ -26,7 +27,12 @@ function Header() {
         </h1>
         
         <div className="header-actions">
-          <span className="user-greeting">
+          {/* User greeting - clickable to go to profile */}
+          <span 
+            className="user-greeting"
+            onClick={() => navigate('/profile')}
+            style={{cursor: 'pointer'}}
+          >
             Hello, {user?.first_name || 'User'}!
           </span>
           
@@ -101,6 +107,7 @@ function AppRoutes() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout onOrderSuccess={handleOrderSuccess} />} />
         <Route path="/orders" element={<OrderHistory />} />
+        <Route path="/profile" element={<UserProfile />} />
         <Route path="/order-confirmation" element={<OrderConfirmation order={completedOrder} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
