@@ -39,7 +39,8 @@ router.post('/signup', async (req, res) => {
                 id: result.rows[0].id,
                 email: result.rows[0].email,
                 first_name: result.rows[0].first_name,
-                last_name: result.rows[0].last_name
+                last_name: result.rows[0].last_name,
+                is_admin: result.rows[0].is_admin || false
             }
         });
     } catch (error) {
@@ -94,7 +95,8 @@ router.post('/login', async (req, res) => {
                 id: result.rows[0].id,
                 email: result.rows[0].email,
                 first_name: result.rows[0].first_name,
-                last_name: result.rows[0].last_name
+                last_name: result.rows[0].last_name,
+                is_admin: result.rows[0].is_admin || false
             }
         });
     } catch (error) {
@@ -109,7 +111,7 @@ router.get('/profile', authenticateToken, async (req, res) => {
         
         // Get user info from database
         const result = await pool.query(
-            'SELECT id, email, first_name, last_name, created_at FROM users WHERE id = $1',
+            'SELECT id, email, first_name, last_name, is_admin, created_at FROM users WHERE id = $1',
             [userId]
         );
         

@@ -7,6 +7,7 @@ import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import OrderHistory from './components/OrderHistory';
 import UserProfile from './components/UserProfile';
+import AdminDashboard from './components/admin/AdminDashboard';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { useAuth } from './context/AuthContext';
@@ -40,6 +41,13 @@ function Header() {
           <button className="orders-btn" onClick={() => navigate('/orders')}>
             Orders
           </button>
+          
+          {/* Admin link - only show if user is admin */}
+          {user?.is_admin && (
+            <button className="admin-btn" onClick={() => navigate('/admin')}>
+              Admin
+            </button>
+          )}
           
           <div className="cart-icon" onClick={() => navigate('/cart')}>
             <span className="cart-emoji">🛒</span>
@@ -108,6 +116,7 @@ function AppRoutes() {
         <Route path="/checkout" element={<Checkout onOrderSuccess={handleOrderSuccess} />} />
         <Route path="/orders" element={<OrderHistory />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/order-confirmation" element={<OrderConfirmation order={completedOrder} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

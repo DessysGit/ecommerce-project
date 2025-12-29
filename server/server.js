@@ -58,6 +58,15 @@ setOrdersPool(pool); // Give orders.js access to database
 // Use routes - all order routes will start with /api/orders
 app.use('/api/orders', ordersRouter);
 
+// Import admin routes and pass database pool to them
+const { router: adminRouter, setPool: setAdminPool } = require('./admin');
+const { setPool: setAdminAuthPool } = require('./middleware/adminAuth');
+setAdminPool(pool); // Give admin.js access to database
+setAdminAuthPool(pool); // Give adminAuth middleware access to database
+
+// Use routes - all admin routes will start with /api/admin
+app.use('/api/admin', adminRouter);
+
 // Root route - test endpoint to check if server is running
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Ecommerce API!'});
